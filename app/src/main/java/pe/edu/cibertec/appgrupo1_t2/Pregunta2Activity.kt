@@ -48,10 +48,10 @@ class Pregunta2Activity : AppCompatActivity(), View.OnClickListener, NavigationB
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragment: Fragment = when (item.itemId) {
-            R.id.nav_p1 -> Pregunta1Fragment()
-            R.id.nav_p2 -> Pregunta2Fragment()
-            R.id.nav_p3 -> Pregunta3Fragment()
-            R.id.nav_p4 -> Pregunta4Fragment()
+            R.id.nav_p1 -> FragmentPregunta1()
+            R.id.nav_p2 -> FragmentPregunta2()
+            R.id.nav_p3 -> FragmentPregunta3()
+            R.id.nav_p4 -> FragmentPregunta4()
             else -> return false
         }
 
