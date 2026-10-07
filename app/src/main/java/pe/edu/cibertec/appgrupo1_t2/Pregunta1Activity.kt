@@ -48,7 +48,7 @@ class Pregunta1Activity : AppCompatActivity(), View.OnClickListener {
             val usuarioValido = verificarCredenciales(usuarioIngresado, contrasenaIngresada)
 
             if (usuarioValido) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, Pregunta2Activity::class.java)
                 startActivity(intent)
                 finish()
             } else {
