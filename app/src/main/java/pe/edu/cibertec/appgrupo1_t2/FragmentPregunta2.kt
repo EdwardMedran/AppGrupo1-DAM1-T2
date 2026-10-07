@@ -1,59 +1,85 @@
 package pe.edu.cibertec.appgrupo1_t2
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import pe.edu.cibertec.appgrupo1_t2.databinding.FragmentPregunta2Binding
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class FragmentPregunta2 : Fragment(), View.OnClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentPregunta2.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentPregunta2 : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentPregunta2Binding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentPregunta2Binding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnCalcular.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+
+        if (v?.id == binding.btnCalcular.id) {
+
+            val textoGramos = binding.etGramos.text.toString().trim()
+
+            if (textoGramos.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Ingrese los gramos de comida sobrante",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
+            val gramos = textoGramos.toDoubleOrNull()
+
+            if (gramos == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Ingrese un valor válido",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
+            if (gramos <= 100) {
+
+                binding.tvResultado.text =
+                    "Plato dentro del margen admisible de consumo."
+
+            } else {
+
+                val exceso = gramos - 100
+                val penalizacion = 15.00 + (exceso * 0.12)
+
+                binding.tvResultado.text = String.format(
+                    Locale.US,
+                    "Gramos sobrantes: %.2f g\n" +
+                            "Exceso de desperdicio: %.2f g\n" +
+                            "Penalización total: S/ %.2f",
+                    gramos,
+                    exceso,
+                    penalizacion
+                )
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pregunta2, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentPregunta2.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentPregunta2().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
