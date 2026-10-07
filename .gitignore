@@ -1,0 +1,25 @@
+# Entorno de desarrollo (IDE)
+.idea/
+*.iml
+.gradle/
+.cxx/
+
+# Archivos de configuración local (Rutas de tu PC)
+local.properties
+
+# Archivos de compilación y empaquetado
+build/
+*/build/
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de captura y logs
+/captures/
+*.log
