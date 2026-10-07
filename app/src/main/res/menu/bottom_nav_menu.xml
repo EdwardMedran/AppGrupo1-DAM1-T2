@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_p1"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Pregunta 1" />
+    <item
+        android:id="@+id/nav_p2"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="Pregunta 2" />
+    <item
+        android:id="@+id/nav_p3"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Pregunta 3" />
+    <item
+        android:id="@+id/nav_p4"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="Pregunta 4" />
+</menu>
