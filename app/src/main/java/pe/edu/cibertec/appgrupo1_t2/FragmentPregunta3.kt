@@ -1,59 +1,83 @@
 package pe.edu.cibertec.appgrupo1_t2
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import pe.edu.cibertec.appgrupo1_t2.databinding.FragmentPregunta3Binding
+import kotlin.random.Random
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class FragmentPregunta3 : Fragment(), View.OnClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentPregunta3.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentPregunta3 : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentPregunta3Binding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var adapter: AnimalAdapter
+
+    // (nombre, palabra en inglés para buscar la foto, descripción)
+    private val datosAnimales = listOf(
+        Triple("León", "lion", "El rey de la selva, vive en manada."),
+        Triple("Tigre", "tiger", "El felino más grande del mundo."),
+        Triple("Elefante", "elephant", "El mamífero terrestre más grande."),
+        Triple("Jirafa", "giraffe", "Tiene el cuello más largo de todos."),
+        Triple("Cebra", "zebra", "Sus rayas son únicas en cada ejemplar."),
+        Triple("Oso", "bear", "Fuerte y gran amante de la miel."),
+        Triple("Lobo", "wolf", "Cazador que vive y caza en manada."),
+        Triple("Zorro", "fox", "Astuto, de cola larga y esponjosa."),
+        Triple("Perro", "dog", "El mejor amigo del hombre."),
+        Triple("Gato", "cat", "Ágil, curioso e independiente."),
+        Triple("Caballo", "horse", "Veloz y fiel compañero de trabajo."),
+        Triple("Vaca", "cow", "Nos da la leche que tomamos."),
+        Triple("Delfín", "dolphin", "Mamífero marino muy inteligente."),
+        Triple("Tiburón", "shark", "Gran depredador de los océanos."),
+        Triple("Águila", "eagle", "Ave de vista increíble y vuelo majestuoso."),
+        Triple("Loro", "parrot", "Colorido, puede imitar la voz humana."),
+        Triple("Pingüino", "penguin", "Ave que no vuela pero nada muy bien."),
+        Triple("Tortuga", "turtle", "Lenta, de caparazón duro y larga vida."),
+        Triple("Cocodrilo", "crocodile", "Reptil de mandíbula poderosa."),
+        Triple("Canguro", "kangaroo", "Salta y lleva a sus crías en una bolsa.")
+    )
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentPregunta3Binding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = AnimalAdapter(crearListaAnimales())
+        binding.rvAnimales.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAnimales.adapter = adapter
+
+        binding.btnCambiarImagenes.setOnClickListener(this)
+    }
+
+    private fun crearListaAnimales(): List<Animal> {
+        val semilla = Random.nextInt(1, 100000)
+        return datosAnimales.mapIndexed { indice, (nombre, palabra, descripcion) ->
+            Animal(
+                nombre = nombre,
+                descripcion = descripcion,
+                imagenUrl = "https://picsum.photos/400/300?random=${semilla + indice}"
+            )
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pregunta3, container, false)
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btnCambiarImagenes -> adapter.actualizar(crearListaAnimales())
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentPregunta3.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentPregunta3().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
