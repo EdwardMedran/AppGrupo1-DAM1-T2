@@ -12,18 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appgrupo1T2">
         <activity
-            android:name=".Pregunta6Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Pregunta5Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Pregunta4Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Pregunta3Activity"
-            android:exported="false" />
-        <activity
             android:name=".Pregunta2Activity"
             android:exported="false" />
         <activity
